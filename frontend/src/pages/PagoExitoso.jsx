@@ -1,0 +1,70 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+const PagoExitoso = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const procesarLectura = async () => {
+      try {
+        const lecturaGuardada = localStorage.getItem("lecturaFormulario");
+        if (!lecturaGuardada) {
+          alert("No se encontraron datos para procesar la lectura.");
+          return navigate("/");
+        }
+
+        const payload = JSON.parse(lecturaGuardada);
+
+        // Paso 1: Guardar lectura en BD
+        const resLectura = await fetch("http://localhost:3001/api/lectura", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const dataLectura = await resLectura.json();
+
+        // Paso 2: Generar interpretación con OpenAI
+        const resAI = await fetch("http://localhost:3001/api/interpretacion", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nombre: payload.nombre,
+            deseos: payload.deseos,
+            numerosPrincipales: payload.numerosPrincipales,
+            numerosComplementarios: payload.numerosComplementarios,
+          }),
+        });
+
+        const dataAI = await resAI.json();
+
+        // Paso 3: Guardar todo en localStorage
+        localStorage.setItem("lecturaNumerologica", JSON.stringify(dataLectura.lectura));
+        localStorage.setItem("resultadoNumerologico", JSON.stringify({
+          principales: payload.numerosPrincipales,
+          complementarios: payload.numerosComplementarios
+        }));
+        localStorage.setItem("interpretacionNumerologica", dataAI.interpretacion);
+
+        // Limpia el temporal
+        localStorage.removeItem("lecturaFormulario");
+
+        // Redirige a resultados
+        navigate("/resultados");
+      } catch (error) {
+        console.error("Error al procesar el pago exitoso:", error);
+      }
+    };
+
+    procesarLectura();
+  }, [navigate]);
+
+  return (
+    <div className="resultados-container">
+      <h2>Procesando tu lectura numerológica...</h2>
+      <p>Por favor, espera unos segundos mientras generamos tu lectura personalizada.</p>
+    </div>
+  );
+};
+
+export default PagoExitoso;

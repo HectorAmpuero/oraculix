@@ -1,0 +1,35 @@
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to top, #1a0e2a, rgba(26, 14, 42, 0.7));
+  padding: 15px 30px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent-color);
+}
+
+.nav-links > button {
+  border: none;
+  background: linear-gradient(to top, #1a0e2a, rgba(26, 14, 42, 0.7));
+  cursor: pointer;
+  color: var(--text-dark);
+  font-family: var(--font-text);
+  font-weight: bold;
+  font-size: 1rem;
+}
