@@ -4,14 +4,17 @@ import "../assets/styles.css";
 
 const Formulario = () => {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     nombre: "",
     nacimiento: "",
-    personaQuerida: "",
+    personaObjetiva: "",
     fechaImportante: "",
-    deseos: "",
+    deseos: ""
   });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const generarNumerosUnicos = (cantidad, max) => {
     const numeros = new Set();
@@ -20,10 +23,6 @@ const Formulario = () => {
       numeros.add(num);
     }
     return Array.from(numeros);
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -39,8 +38,10 @@ const Formulario = () => {
     };
 
     try {
-      // Guardar los datos en localStorage (temporal)
-      localStorage.setItem("lecturaFormulario", JSON.stringify(payload));
+      // Guardar en localStorage (temporal)
+      localStorage.setItem("lecturaNumerologica", JSON.stringify(payload));
+      localStorage.setItem("resultadoNumerologico", JSON.stringify(numerosPrincipales));
+      localStorage.setItem("interpretacionNumerologica", "Querido Héctor, cada uno de estos números vibra con tu energía personal.");
 
       // Crear preferencia de Mercado Pago
       const response = await fetch("http://localhost:3001/api/pago/crear-preferencia", {
@@ -50,7 +51,7 @@ const Formulario = () => {
       const data = await response.json();
 
       if (data.id) {
-        // Redirigir al Checkout Pro de Mercado Pago
+        // Redirigir al Checkout de Mercado Pago
         window.location.href = `https://www.mercadopago.cl/checkout/v1/redirect?pref_id=${data.id}`;
       } else {
         alert("Hubo un error al generar el enlace de pago.");
@@ -64,35 +65,65 @@ const Formulario = () => {
   return (
     <div className="formulario-container">
       <div className="info-signos">
-        <h2>Y ESTOS SON LOS SIGNOS PARA DESCUBRIRLO</h2>
-        <p>Para descubrir tu número, necesitamos conocer algunos aspectos clave de tu vida.</p>
+        <h2>¡Hay signos en tus números!</h2>
+        <p>Para descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida.</p>
         <ul>
-          <li><strong>Tu nombre completo</strong> – La vibración de tu identidad.</li>
-          <li><strong>Tu fecha de nacimiento</strong> – La energía que te acompaña desde el inicio.</li>
-          <li><strong>El nombre de una persona querida</strong> – Aquellos que marcan tu camino.</li>
-          <li><strong>Una fecha importante</strong> – Momentos que dejaron huella en tu historia.</li>
-          <li><strong>Tus deseos más profundos</strong> – Lo que anhelas atraer a tu vida.</li>
+          <li><strong>Tu nombre completo</strong> 🔎 la vibración de tu identidad.</li>
+          <li><strong>Tu fecha de nacimiento</strong> 🌞 la energía que te acompaña desde el inicio.</li>
+          <li><strong>Una persona que admiras</strong> 👤 Aquello que marca un ideal para ti.</li>
+          <li><strong>Una fecha que no olvidas</strong> 🕰️ Momentos que dejan huella en tu historia.</li>
+          <li><strong>Tus deseos más profundos</strong> 💫 lo que anhelas atraer a tu vida.</li>
         </ul>
-        <p>Con estos datos, descifraremos los números que resuenan con tu destino y te revelaremos su significado.</p>
+        <p>Con esta información, descifraremos los números que resuenan con tu destino y te revelaremos su significado. 🔮</p>
       </div>
 
       <form onSubmit={handleSubmit} className="formulario-box">
-        <h2>COMPLETA TU INFORMACIÓN</h2>
+        <h3>COMPLETA TU INFORMACIÓN 🔐</h3>
 
-        <label>Nombre completo</label>
-        <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
+        <label>Nombre completo:</label>
+        <input
+          type="text"
+          name="nombre"
+          value={formData.nombre}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Fecha de nacimiento</label>
-        <input type="date" name="nacimiento" value={formData.nacimiento} onChange={handleChange} required />
+        <label>Fecha de nacimiento:</label>
+        <input
+          type="date"
+          name="nacimiento"
+          value={formData.nacimiento}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Nombre de una persona querida</label>
-        <input type="text" name="personaQuerida" value={formData.personaQuerida} onChange={handleChange} required />
+        <label>Nombre de una persona querida:</label>
+        <input
+          type="text"
+          name="personaObjetiva"
+          value={formData.personaObjetiva}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Fecha importante</label>
-        <input type="date" name="fechaImportante" value={formData.fechaImportante} onChange={handleChange} required />
+        <label>Fecha importante:</label>
+        <input
+          type="date"
+          name="fechaImportante"
+          value={formData.fechaImportante}
+          onChange={handleChange}
+          required
+        />
 
-        <label>¿Qué deseas atraer?</label>
-        <textarea name="deseos" value={formData.deseos} onChange={handleChange} required />
+        <label>¿Qué deseas con más fuerza?</label>
+        <input
+          type="text"
+          name="deseos"
+          value={formData.deseos}
+          onChange={handleChange}
+          required
+        />
 
         <button type="submit" className="btn">Descubrir mis números</button>
       </form>
@@ -101,3 +132,4 @@ const Formulario = () => {
 };
 
 export default Formulario;
+
