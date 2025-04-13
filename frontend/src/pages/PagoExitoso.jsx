@@ -8,7 +8,7 @@ const PagoExitoso = () => {
     const procesarLectura = async () => {
       try {
         const lecturaGuardada = localStorage.getItem("lecturaFormulario");
-        if (!lecturaGuardada) {
+        if (!lecturaGuardada || lecturaGuardada === "undefined") {
           alert("No se encontraron datos para procesar la lectura.");
           return navigate("/");
         }
@@ -21,6 +21,10 @@ const PagoExitoso = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
+        if (!resLectura.ok) {
+          throw new Error("Error al guardar la lectura en la base de datos.");
+        }
 
         const dataLectura = await resLectura.json();
 
@@ -38,7 +42,7 @@ const PagoExitoso = () => {
 
         const dataAI = await resAI.json();
 
-        // Paso 3: Guardar todo en localStorage
+        // Paso 3: Guardar en localStorage
         localStorage.setItem("lecturaNumerologica", JSON.stringify(dataLectura.lectura));
         localStorage.setItem("resultadoNumerologico", JSON.stringify({
           principales: payload.numerosPrincipales,
@@ -68,3 +72,4 @@ const PagoExitoso = () => {
 };
 
 export default PagoExitoso;
+

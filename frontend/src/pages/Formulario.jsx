@@ -7,10 +7,11 @@ const Formulario = () => {
   const [formData, setFormData] = useState({
     nombre: "",
     nacimiento: "",
-    personaObjetiva: "",
+    personaQuerida: "",
     fechaImportante: "",
-    deseos: ""
+    deseos: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,6 +28,7 @@ const Formulario = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const numerosPrincipales = generarNumerosUnicos(6, 41);
     const numerosComplementarios = generarNumerosUnicos(14, 25);
@@ -38,12 +40,9 @@ const Formulario = () => {
     };
 
     try {
-      // Guardar en localStorage (temporal)
-      localStorage.setItem("lecturaNumerologica", JSON.stringify(payload));
-      localStorage.setItem("resultadoNumerologico", JSON.stringify(numerosPrincipales));
-      localStorage.setItem("interpretacionNumerologica", "Querido Héctor, cada uno de estos números vibra con tu energía personal.");
+      // Este es el localStorage que espera PagoExitoso.jsx
+      localStorage.setItem("lecturaFormulario", JSON.stringify(payload));
 
-      // Crear preferencia de Mercado Pago
       const response = await fetch("http://localhost:3001/api/pago/crear-preferencia", {
         method: "POST",
       });
@@ -51,14 +50,15 @@ const Formulario = () => {
       const data = await response.json();
 
       if (data.id) {
-        // Redirigir al Checkout de Mercado Pago
         window.location.href = `https://www.mercadopago.cl/checkout/v1/redirect?pref_id=${data.id}`;
       } else {
         alert("Hubo un error al generar el enlace de pago.");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error:", error);
       alert("Ocurrió un error inesperado.");
+      setLoading(false);
     }
   };
 
@@ -81,51 +81,23 @@ const Formulario = () => {
         <h3>COMPLETA TU INFORMACIÓN 🔐</h3>
 
         <label>Nombre completo:</label>
-        <input
-          type="text"
-          name="nombre"
-          value={formData.nombre}
-          onChange={handleChange}
-          required
-        />
+        <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
 
         <label>Fecha de nacimiento:</label>
-        <input
-          type="date"
-          name="nacimiento"
-          value={formData.nacimiento}
-          onChange={handleChange}
-          required
-        />
+        <input type="date" name="nacimiento" value={formData.nacimiento} onChange={handleChange} required />
 
         <label>Nombre de una persona querida:</label>
-        <input
-          type="text"
-          name="personaObjetiva"
-          value={formData.personaObjetiva}
-          onChange={handleChange}
-          required
-        />
+        <input type="text" name="personaQuerida" value={formData.personaQuerida} onChange={handleChange} required />
 
         <label>Fecha importante:</label>
-        <input
-          type="date"
-          name="fechaImportante"
-          value={formData.fechaImportante}
-          onChange={handleChange}
-          required
-        />
+        <input type="date" name="fechaImportante" value={formData.fechaImportante} onChange={handleChange} required />
 
         <label>¿Qué deseas con más fuerza?</label>
-        <input
-          type="text"
-          name="deseos"
-          value={formData.deseos}
-          onChange={handleChange}
-          required
-        />
+        <input type="text" name="deseos" value={formData.deseos} onChange={handleChange} required />
 
-        <button type="submit" className="btn">Descubrir mis números</button>
+        <button type="submit" className="btn">
+          {loading ? "Descubriendo tus números..." : "Descubrir mis números"}
+        </button>
       </form>
     </div>
   );

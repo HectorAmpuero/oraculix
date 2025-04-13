@@ -16,14 +16,13 @@ const Resultados = () => {
       if (lecturaRaw && resultadoRaw && interpretacionRaw) {
         const lectura = JSON.parse(lecturaRaw);
         const numeros = JSON.parse(resultadoRaw);
-        const interpretacion = interpretacionRaw; // sin JSON.parse
 
         setDatos(lectura);
         setNumeros(numeros);
-        setInterpretacion(interpretacion);
-
-        // Mostrar con transición suave
+        setInterpretacion(interpretacionRaw);
         setTimeout(() => setVisible(true), 500);
+      } else {
+        throw new Error("Faltan datos en localStorage.");
       }
     } catch (error) {
       console.error("Error al leer desde localStorage:", error);
@@ -46,8 +45,8 @@ const Resultados = () => {
       <div className="numeros-section">
         <h3>NÚMEROS PRINCIPALES</h3>
         <div className="numeros">
-          {numeros.map((num, index) => (
-            <span key={index}>{num}</span>
+          {numeros.principales.map((num, index) => (
+            <span key={`p-${index}`}>{num}</span>
           ))}
         </div>
       </div>
@@ -55,21 +54,21 @@ const Resultados = () => {
       <div className="numeros-section">
         <h3>NÚMEROS COMPLEMENTARIOS</h3>
         <div className="numeros">
-          {datos.numerosComplementarios.map((num, index) => (
-            <span key={index}>{num}</span>
+          {numeros.complementarios.map((num, index) => (
+            <span key={`c-${index}`}>{num}</span>
           ))}
         </div>
       </div>
 
       <div className="interpretacion-box">
-        <h3>Interpretación personal:</h3>
+        <h3>Tu mensaje personal:</h3>
         <p>{interpretacion}</p>
       </div>
 
       <div className="mensaje-final">
-        <p>🎴 La energía de estos números vibra con tu energía personal.</p>
-        <p>✨ Úsalos como guía, inspiración o simplemente como un impulso hacia lo que deseas.</p>
-        <p className="frase">💛 Confía en tus números. Confía en ti. 💛</p>
+        <p>Cada uno de estos números vibra con tu energía personal.</p>
+        <p>Úsalos como guía, inspiración o simplemente como un impulso hacia lo que deseas.✨</p>
+        <p className="frase">🌟 Confía en tus números. Confía en ti. 🌟</p>
       </div>
     </div>
   );
