@@ -40,8 +40,6 @@ app.get("*", (req, res) => {
 // =================================================
 
 
-// Servir frontend en producción
-
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.get("*", (req, res) => {
