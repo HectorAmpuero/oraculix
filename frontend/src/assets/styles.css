@@ -823,3 +823,138 @@ button:disabled {
 
 
 
+/* MEDIA QUERYS */
+
+/* Tablet (entre 768px y 1024px) */
+@media (max-width: 1024px) {
+  .formulario-container,
+  .resultados-container,
+  .cuenta-container,
+  .navbar,
+  .slide1,
+  .slide2,
+  .slide3 {
+    padding: 20px;
+    font-size: 90%;
+  }
+
+  .formulario-box,
+  .info-signos {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .numeros-section {
+    text-align: center;
+  }
+}
+
+/* Móviles (hasta 767px) */
+@media (max-width: 767px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .formulario-container,
+  .resultados-container,
+  .cuenta-container {
+    padding: 15px;
+  }
+
+  .formulario-box,
+  .info-signos {
+    width: 100%;
+  }
+
+  .slide1 h1,
+  .slide2 h2,
+  .slide3 h2 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .numeros {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .numero-circulo {
+    width: 50px;
+    height: 50px;
+    font-size: 1rem;
+  }
+
+  footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide2 {
+    flex-direction: column;
+    padding: 40px 20px;
+    height: auto;
+    text-align: center;
+  }
+
+  .slide2 h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+
+  .slide2 div {
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide2 button {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .formulario-container {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .info-signos,
+  .formulario-box {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px 0;
+    height: 100vh;
+  }
+  .info-signos h2 {
+    font-size: small;
+  }
+
+  .info-signos ul {
+    padding-left: 20px;
+    text-align: left;
+  }
+
+  .formulario-box button {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 20px;
+  }
+}
