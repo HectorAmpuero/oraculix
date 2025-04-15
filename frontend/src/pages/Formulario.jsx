@@ -43,7 +43,7 @@ const Formulario = () => {
       // Este es el localStorage que espera PagoExitoso.jsx
       localStorage.setItem("lecturaFormulario", JSON.stringify(payload));
 
-      const response = await fetch("http://localhost:3001/api/pago/crear-preferencia", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pago/crear-preferencia`, {
         method: "POST",
       });
 
