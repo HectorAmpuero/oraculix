@@ -16,7 +16,7 @@ const PagoExitoso = () => {
         const payload = JSON.parse(lecturaGuardada);
 
         // Paso 1: Guardar lectura en BD
-        const resLectura = await fetch("http://localhost:3001/api/lectura", {
+        const reslectura = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/lectura`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -29,7 +29,7 @@ const PagoExitoso = () => {
         const dataLectura = await resLectura.json();
 
         // Paso 2: Generar interpretación con OpenAI
-        const resAI = await fetch("http://localhost:3001/api/interpretacion", {
+        const resAI = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/interpretacion`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

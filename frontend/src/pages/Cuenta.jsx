@@ -20,9 +20,9 @@ const Cuenta = () => {
 
   const fetchHistorial = async (email) => {
     try {
-      const res = await fetch(`http://localhost:3001/api/lecturas/${email}`);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/lecturas/${email}`);
       const data = await res.json();
-      setHistorial(data);
+      setLecturas(data);
     } catch (err) {
       console.error("Error al cargar historial:", err);
     }
