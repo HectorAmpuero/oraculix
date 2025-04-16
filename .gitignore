@@ -18,6 +18,7 @@ frontend/dist/
 backend/dist/
 
 # Ambiente
+!frontend/.env
 .env
 .env.local
 
