@@ -21,6 +21,9 @@ app.use(cors({
   credentials: true
 }));
 
+console.log("🛡️ CORS habilitado para:", ['https://oraculix.cl', 'http://localhost:5173']);
+
+
 app.use(express.json());
 app.use(morgan("dev"));
 
