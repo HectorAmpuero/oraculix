@@ -3,7 +3,7 @@ services:
     name: oraculix-backend
     env: node
     plan: free
-    buildCommand: npm install --prefix . && npm run build --prefix ../frontend
+    buildCommand: npm install && npm run build --prefix ../frontend
     startCommand: node server.js
     workingDirectory: backend
     envVars:
