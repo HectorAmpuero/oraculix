@@ -3,10 +3,9 @@ services:
     name: oraculix-backend
     env: node
     plan: free
-    buildCommand: |
-      npm install --prefix backend
-      npm install --prefix frontend
-      npm run build --prefix frontend
+    buildCommand:|
+      cd backend && npm install
+      cd ../frontend && npm install && npm run build
     startCommand: node backend/server.js
     envVars:
       - key: OPENAI_API_KEY
