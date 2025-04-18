@@ -5,7 +5,7 @@ services:
     plan: free
     buildCommand: |
       cd frontend && npm install && npm run build
-      cd ../backend && npm install
+      npm install --prefix backend
     startCommand: node backend/server.js
     envVars:
       - key: OPENAI_API_KEY
