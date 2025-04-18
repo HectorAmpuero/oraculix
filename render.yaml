@@ -3,7 +3,7 @@ services:
     name: oraculix-backend
     env: node
     plan: free
-    buildCommand:|
+    buildCommand: |
       cd backend && npm install
       cd ../frontend && npm install && npm run build
     startCommand: node backend/server.js
