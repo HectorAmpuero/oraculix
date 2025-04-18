@@ -4,9 +4,11 @@ services:
     env: node
     plan: free
     buildCommand: |
-      cd backend && npm install
-      cd ../frontend && npm install && npm run build
-    startCommand: node backend/server.js
+      cd backend && npm install         # Instala dependencias backend (incluye dotenv)
+      cd ../frontend && npm install     # Instala dependencias frontend
+      npm run build --prefix ../frontend # Compila frontend
+    startCommand: node server.js
+    workingDirectory: backend # Ejecuta todo desde /backend
     envVars:
       - key: OPENAI_API_KEY
         sync: false
