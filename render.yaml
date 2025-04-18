@@ -3,12 +3,13 @@ services:
     name: oraculix-backend
     env: node
     plan: free
-    buildCommand: npm install && npm run build --prefix ../frontend
-    startCommand: node server.js
-    workingDirectory: backend
+    buildCommand: |
+      npm install --prefix backend
+      npm install --prefix frontend
+      npm run build --prefix frontend
+    startCommand: node backend/server.js
     envVars:
       - key: OPENAI_API_KEY
         sync: false
       - key: MERCADOPAGO_ACCESS_TOKEN
         sync: false
-# redeploy
